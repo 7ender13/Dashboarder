@@ -1,6 +1,6 @@
 #login {
     height: 100%;
-    background: url('/assets/images/backgrounds/march.jpg') no-repeat;
+    background: #1A2530;
     background-size: cover;
 
     #login-form-wrapper {
@@ -15,19 +15,24 @@
             text-align: center;
 
             .logo {
-                width: 128px;
-                height: 128px;
-                line-height: 128px;
+                width: 180px;
+                height: 180px;
+                line-height: 180px;
                 font-size: 86px;
                 font-weight: 500;
-                margin: 32px auto;
+                margin: 12px auto;
                 color: #FFFFFF;
                 border-radius: 2px;
             }
 
             .title {
-                font-size: 17px;
-                margin: 16px 0 32px 0;
+                font-family: 'Pacifico', cursive;
+                font-size: 30px;
+                margin: 6px 0 32px 0;
+
+                span{
+                  color: #E74C3C;
+                }
             }
 
             form {
@@ -106,30 +111,6 @@
                     &:after {
                         left: 100%;
                     }
-                }
-            }
-
-            .md-button {
-
-                &.google,
-                &.facebook {
-                    width: 192px;
-                    text-transform: none;
-                    color: #FFFFFF;
-                    font-size: 13px;
-
-                    md-icon {
-                        color: #FFFFFF;
-                        margin: 0 8px 0 0;
-                    }
-                }
-
-                &.google {
-                    background-color: #D73D32;
-                }
-
-                &.facebook {
-                    background-color: rgb(63, 92, 154);
                 }
             }
         }
