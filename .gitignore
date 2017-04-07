@@ -1,3 +1,6 @@
 node_modules/
 client/.tmp/
 data/
+mongodRepair
+client/dist/
+client/bower_components/
