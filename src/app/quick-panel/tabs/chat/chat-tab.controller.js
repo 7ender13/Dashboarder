@@ -7,7 +7,7 @@
         .controller('ChatTabController', ChatTabController);
 
     /** @ngInject */
-    function ChatTabController(msApi, $timeout)
+    function ChatTabController(msApi, $timeout, $scope, mySocket)
     {
         var vm = this;
 
@@ -15,6 +15,13 @@
         vm.chat = {};
         vm.chatActive = false;
         vm.replyMessage = '';
+        vm.currentProject = 0;
+
+        $scope.sendMessage = function(message){
+            console.log('newMessage : ' + message);
+            mySocket.emit('newMessage', message);
+        }
+
 
         msApi.request('quickPanel.contacts@get', {},
             // Success

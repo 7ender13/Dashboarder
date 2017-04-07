@@ -7,10 +7,10 @@
         .controller('QuickPanelController', QuickPanelController);
 
     /** @ngInject */
-    function QuickPanelController(msApi)
+    function QuickPanelController(msApi, mySocket)
     {
         var vm = this;
-
+        mySocket.emit('getEvent', {'filter' : 'agency', 'email' : localStorage.getItem("email")});
         // Data
         vm.date = new Date();
         vm.settings = {

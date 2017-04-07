@@ -2,28 +2,24 @@
     <div layout="row" layout-align="start center" flex>
 
         <div class="logo" layout="row" layout-align="start center">
-            <span class="logo-image">F</span>
-            <span class="logo-text">FUSE</span>
+            <img src="/assets/images/logos/logo.png" alt="LOGO" style="height : 55px;">
+            <div class="logo-text"><span>D</span>ash<span>B</span>oarder</div>
         </div>
 
         <div class="toolbar-separator"></div>
 
-        <md-button id="navigation-toggle" class="md-icon-button" ng-click="vm.toggleSidenav('navigation')"
-                   hide-gt-sm aria-label="Toggle navigation" translate
-                   translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION">
-            <md-icon md-font-icon="icon-menu" class="icon"></md-icon>
-        </md-button>
 
-        <md-button class="md-icon-button navigation-fold-toggle"
+
+        <!--<md-button class="md-icon-button navigation-fold-toggle"
                    hide show-gt-sm aria-label="Toggle navigation fold"
                    translate translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION_FOLD"
                    ng-click="vm.toggleMsNavigationFolded()">
             <md-icon class="s18" md-font-icon="icon-backburger"></md-icon>
-        </md-button>
+        </md-button>-->
 
-        <ms-shortcuts></ms-shortcuts>
+        <!--<ms-shortcuts></ms-shortcuts>-->
 
-        <div class="toolbar-separator"></div>
+
     </div>
 
     <div layout="row" layout-align="start center">
@@ -91,12 +87,17 @@
                 </md-menu-content>
             </md-menu>
         </md-menu-bar>
-
-        <div class="toolbar-separator"></div>
+<div class="toolbar-separator"></div>
+        <md-button id="navigation-toggle" class="md-icon-button" ng-click="vm.toggleSidenav('navigation')"
+                   hide-gt-sm aria-label="Toggle navigation" translate
+                   translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION">
+            <md-icon md-font-icon="icon-menu" class="icon"></md-icon>
+        </md-button>
+        <!--<div class="toolbar-separator"></div>
 
         <ms-search-bar on-search="vm.search(query)" on-result-click="vm.searchResultClick(item)" debounce="300"></ms-search-bar>
 
-        <div class="toolbar-separator"></div>
+        <div class="toolbar-separator"></div>X
 
         <md-menu id="language-menu" md-offset="0 72" md-position-mode="target-right target">
             <md-button class="language-button" ng-click="$mdOpenMenu()"
@@ -118,13 +119,12 @@
                     </md-button>
                 </md-menu-item>
             </md-menu-content>
-        </md-menu>
+        </md-menu>-->
 
-        <div class="toolbar-separator"></div>
 
         <md-button id="quick-panel-toggle" class="md-icon-button" ng-click="vm.toggleSidenav('quick-panel')"
                    aria-label="Toggle quick panel" translate translate-attr-aria-label="TOOLBAR.TOGGLE_QUICK_PANEL">
-            <md-icon md-font-icon="icon-format-list-bulleted" class="icon"></md-icon>
+            <md-icon md-font-icon="icon-comment-multipe-outline" class="icon s28"></md-icon>
         </md-button>
     </div>
 </div>

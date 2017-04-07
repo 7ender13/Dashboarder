@@ -1,0 +1,172 @@
+<div layout="row" layout-wrap>
+
+    <div class="about" layout="column" flex="100" flex-gt-sm="100" flex-gt-md="100">
+        <div class="profile-box info-box general md-whiteframe-1dp" layout="column">
+            <header class="md-accent-bg">
+                <div class="title" translate="PROFILE.GENERAL_INFORMATION">General Information</div>
+            </header>
+
+            <div class="content">
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.GENDER">Gender</div>
+                    <div class="info">{{vm.about.general.gender}}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.BIRTHDAY">Birthday</div>
+                    <div class="info">{{vm.about.general.birthday}}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.LOCATIONS">Locations</div>
+                    <div class="info location" ng-repeat="location in vm.about.general.locations">
+                        <span>{{location}}</span>
+                        <md-icon md-font-icon="icon-map-marker" class="s16"></md-icon>
+                    </div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.ABOUT_ME">About Me</div>
+                    <div class="info">{{vm.about.general.about}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-box info-box work md-whiteframe-1dp" layout="column">
+            <header class="md-accent-bg">
+                <div class="title" translate="PROFILE.WORK">Work</div>
+            </header>
+
+            <div class="content">
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.OCCUPATION">Occupation</div>
+                    <div class="info">{{vm.about.work.occupation}}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.SKILLS">Skills</div>
+                    <div class="info">{{vm.about.work.skills}}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.JOBS">Jobs</div>
+                    <table class="info jobs">
+                        <tr class="job" ng-repeat="job in vm.about.work.jobs">
+                            <td class="company">{{job.company}}</td>
+                            <td class="date">{{job.date}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-box info-box contact md-whiteframe-1dp" layout="column">
+            <header class="md-accent-bg">
+                <div class="title" translate="PROFILE.CONTACT">Contact</div>
+            </header>
+            <div class="content">
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.ADDRESS">Address</div>
+                    <div class="info">{{vm.about.contact.address}}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.TEL">Tel.</div>
+                    <div class="info" ng-repeat="tel in vm.about.contact.tel">
+                        <span>{{tel}}</span>
+                    </div>
+                </div>
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.WEBSITE">Website</div>
+                    <div class="info" ng-repeat="website in vm.about.contact.websites">
+                        <span>{{website}}</span>
+                    </div>
+                </div>
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.EMAILS">Emails</div>
+                    <div class="info" ng-repeat="email in vm.about.contact.emails">
+                        <span>{{email}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-box info-box md-whiteframe-1dp" layout="column">
+            <header class="md-accent-bg">
+                <div class="title">Update your informations</div>
+            </header>
+            <div class="content">
+              <div class="form-wrapper">
+
+                  <form name="basicForm" class="md-inline-form" novalidate>
+                      <div class="form-title">General information</div>
+                      <div layout="column" layout-gt-sm="row">
+                          <md-input-container flex>
+                              <input type="text" name="firstname" ng-model="vm.basicForm.firstname"
+                                     placeholder="Firstname"
+                                     required>
+                              <div ng-messages="basicForm.firstname.$error"
+                                   role="alert">
+                                  <div ng-message="required">
+                                      <span>Firstname field is required.</span>
+                                  </div>
+                              </div>
+                          </md-input-container>
+
+                          <md-input-container flex>
+                              <input type="text" name="lastname" ng-model="vm.basicForm.lastname" placeholder="Lastname"
+                                     required>
+                              <div ng-messages="basicForm.lastname.$error"
+                                   role="alert">
+                                  <div ng-message="required">
+                                      <span>Lastname field is required.</span>
+                                  </div>
+                              </div>
+                          </md-input-container>
+                      </div>
+
+                      <div layout="column" layout-gt-xs="row">
+                          <md-input-container flex>
+                              <label>City</label>
+                              <input type="text" name="city" ng-model="vm.basicForm.city">
+                          </md-input-container>
+
+                          <md-input-container flex>
+                              <label>State</label>
+                              <md-select ng-model="vm.basicForm.state">
+                                  <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
+                                      {{state.abbrev}}
+                                  </md-option>
+                              </md-select>
+                          </md-input-container>
+
+                          <md-input-container flex>
+                              <label>Postal Code</label>
+                              <input name="postalcode" ng-model="vm.basicForm.postalCode" placeholder="12345"
+                                     required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                              <div ng-messages="basicForm.postalcode.$error" role="alert" multiple>
+                                  <div ng-message="required"><span>You must supply a postal code.</span></div>
+                                  <div ng-message="pattern"><span>That doesn't look like a valid postal code.</span></div>
+                                  <div ng-message="md-maxlength">
+                                      <span>Postal code can't be longer than 5 characters.</span>
+                                  </div>
+                              </div>
+                          </md-input-container>
+                      </div>
+
+                      <md-input-container class="md-block">
+                          <label>About me</label>
+                          <textarea ng-model="vm.basicForm.biography" md-maxlength="150" max-rows="5"></textarea>
+                      </md-input-container>
+
+                      <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                                 ng-disabled="basicForm.$invalid || basicForm.$pristine">
+                          Submit
+                      </md-button>
+                  </form>
+
+              </div>
+            </div>
+        </div>
+    </div>
+
+</div>

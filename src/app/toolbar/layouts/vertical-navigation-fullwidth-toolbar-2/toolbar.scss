@@ -5,7 +5,9 @@
         .logo {
             width: $navigationWidth;
             padding: 0 16px;
-
+            img{
+                height : 100%;
+            }
             .logo-image {
                 display: block;
                 background: material-color('light-blue', '600');
@@ -19,11 +21,17 @@
                 font-weight: 500;
                 border-radius: 2px;
             }
+            .title {
 
+            }
             .logo-text {
-                color: rgba(0, 0, 0, 0.87);
-                margin-left: 16px;
-                font-size: 16px;
+                font-family: 'Pacifico', cursive;
+                font-size: 24px;
+                margin-left : 15px;
+
+                span{
+                  color: #E74C3C;
+                }
             }
         }
 

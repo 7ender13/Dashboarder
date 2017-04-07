@@ -3,12 +3,18 @@
     'use strict';
 
     angular
-        .module('app.quick-panel', [])
+        .module('app.quick-panel', ['btford.socket-io'])
+        .factory('mySocket', function (socketFactory) {
+            return socketFactory({
+                  ioSocket: io('http://localhost:8000')
+              });
+        })
         .config(config);
 
     /** @ngInject */
     function config($translatePartialLoaderProvider, msApiProvider)
     {
+
         // Translation
         $translatePartialLoaderProvider.addPart('app/quick-panel');
 
