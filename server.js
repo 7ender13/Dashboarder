@@ -1,46 +1,35 @@
-// help : https://scalegrid.io/blog/getting-started-with-mongodb-and-mongoose/
-// https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
+'use strict';
 
-// help2 : http://stackoverflow.com/questions/35680565/sending-message-to-specific-client-in-socket-io
+const http          = require('http');
+const path          = require('path');
+const mongoose      = require('mongoose');
 
-// Test Socket.IO at http://amritb.github.io/socketio-client-tool/
+let express         = require('express');
+let bodyParser      = require('body-parser');
+const router        = express();
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+let server          = http.createServer(router);
 
-var express = require('express');
-var app = express();
-var httpServer = require('http').createServer(app).listen('8000');
-var io = require('socket.io').listen(httpServer);
+const userCtrl      = require("./controller/userController");
+
+//MongoDB : Collection "DashBoard" créé pour le projet
+mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
+    if(error){
+        console.log("Connection database : NOK !");
+        console.log(error)
+    }
+    else{
+        console.log("Connection database : OK !");
+    }
+});
+
+router.use(express.static(path.join(__dirname, 'client/dist')));
+router.use('/user', userCtrl);
 
 
-console.log('Server started.');
-
-
-io.on('connection', function(socket){
-    console.log("client : "+socket.request.connection.remoteAddress+' connected');
-    socket.join(0);
-    /*MESSAGE PART*/
-    socket.on('goToRoom', function(data){
-        socket.join(data.projectID);
-        socket.room = data.projectID;
-        console.log('go to room : '+data.projectID)
-
-        //init client message
-        var conversation = {
-            'participant' : {'Thomas Burgio', 'Yann Guineau'},
-            'messages' : {
-                {'from' : 'Thomas Burgio', 'message' : 'hello'},
-                {'from' : 'Thomas Burgio', 'message' : 'hello'},
-                {'from' : 'Thomas Burgio', 'message' : 'hello'},
-                {'from' : 'Thomas Burgio', 'message' : 'hello'},
-                {'from' : 'Thomas Burgio', 'message' : 'hello'}
-            }
-        };
-        socket.emit('initMessage', conversation);
-    })
-
-    socket.on('newMessage', function(message){
-        //save to BDD
-
-        var messageObj = {'from' : socket.pseudo, 'message' : message}
-        socket.in(socket.room).emit('messageReceive',messageObj);
-    });
-})
+server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
+  console.log("-----------------------------------");
+  console.log("Serveur en écoute sur le port " + process.env.PORT);
+  console.log("-----------------------------------");
+});

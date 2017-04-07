@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let ChatSchema = new Schema({
-    projetID:{type:Schema.Types.ObjectId, required:true, unique:true, trim:true},
-    userPseudo:{type:String, required:true},
-    message:{type:String, required:true}
+    projectID:String,
+    participant:[{username:String, status:Boolean}],
+    messages:[{from:String, message:String}]
 });
 
 module.exports = mongoose.model('Chat', ChatSchema);
