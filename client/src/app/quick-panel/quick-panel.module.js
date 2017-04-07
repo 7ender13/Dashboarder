@@ -6,7 +6,7 @@
         .module('app.quick-panel', ['btford.socket-io'])
         .factory('mySocket', function (socketFactory) {
             return socketFactory({
-                  ioSocket: io('http://localhost:8000')
+                  ioSocket: io()
               });
         })
         .config(config);
