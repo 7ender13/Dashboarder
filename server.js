@@ -24,7 +24,7 @@ mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
     }
 });
 
-router.use(express.static(path.join(__dirname, 'client')));
+router.use(express.static(path.join(__dirname, 'client/dist')));
 router.use('/user', userCtrl);
 
 
