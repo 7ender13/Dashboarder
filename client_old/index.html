@@ -1,0 +1,111 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+<button onclick="monGETALL()" >GET ALL</button>
+<button onclick="monGETBYPSEUDO()" >GET BY PSEUDO</button>
+<button onclick="monPOST()" >POST</button>
+<button onclick="monUPDATE()" >UPDATE</button>
+<button onclick="monDELETE()" >DELETE</button>
+
+<script type="text/javascript">
+function monGETALL()
+  {
+    $.ajax({
+      url:"https://dashboarder-duff013.c9users.io/user",
+      type: "GET",
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+  function monGETBYPSEUDO()
+  {
+    $.ajax({
+      url:"https://dashboarder-duff013.c9users.io/user/duff",
+      type: "GET",
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+function monPOST()
+{
+  
+	  var data = {'name':'aaa', 'surname':'bbb', 'pseudo':'eaaze', 'password':'azerty', 'email':'tibo.t@ynov.com'};
+	
+    $.ajax({
+      url:"https://dashboarder-duff013.c9users.io/user",
+      type: "POST",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+function monUPDATE()
+{
+  
+	  var data = {'name':'aaa', 'surname':'bbb', 'pseudo':'eaaze', 'password':'azerty', 'email':'tibo.t@ynov.com'};
+	
+    $.ajax({
+      url:"https://dashboarder-duff013.c9users.io/user",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+
+function monDELETE()
+{
+  
+	  var data = {'pseudo':'aze'};
+	
+    $.ajax({
+      url:"https://dashboarder-duff013.c9users.io/user",
+      type: "DELETE",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+</script>
+</body>
+</html>

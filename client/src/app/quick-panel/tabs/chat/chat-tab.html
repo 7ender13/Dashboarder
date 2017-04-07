@@ -1,0 +1,61 @@
+<div class="main animate-slide-left" ng-hide="vm.chatActive">
+    <div class="chat_window">
+        <div class="top_menu">
+            <div class="buttons">
+                <div class="avatar-wrapper">
+                    <img md-menu-align-target="" class="avatar" src="assets/images/avatars/profile.jpg">
+                    <md-icon style="position: absolute;bottom: -5px;right: 5px;color: rgb(76, 175, 80);" md-font-icon="" class="icon status s16 md-default-theme material-icons icon-checkbox-marked-circle">
+                    </md-icon>
+                    <md-tooltip md-direction="bottom">
+                        Thomas Burgio
+                    </md-tooltip>
+                </div>
+                <div class="avatar-wrapper">
+                    <img md-menu-align-target="" class="avatar" src="assets/images/avatars/profile.jpg">
+                    <md-icon style="position: absolute;bottom: -5px;right: 5px;color: rgb(76, 175, 80);" md-font-icon="" class="icon status s16 md-default-theme material-icons icon-checkbox-marked-circle">
+                    </md-icon>
+                    <md-tooltip md-direction="bottom">
+                        Thomas Burgio
+                    </md-tooltip>
+                </div>
+                <div class="avatar-wrapper">
+                    <img md-menu-align-target="" class="avatar" src="assets/images/avatars/profile.jpg">
+                    <md-tooltip md-direction="bottom">
+                        Thomas Burgio
+                    </md-tooltip>
+                </div>
+            </div>
+        </div>
+        <ul class="messages">
+            <li class="message left">
+                <div class="avatar"></div>
+                <div class="text_wrapper">
+                    <div class="text">vcdfvfdev</div>
+                </div>
+            </li>
+                <li class="message right">
+                    <div class="avatar"></div>
+                    <div class="text_wrapper">
+                        <div class="text">fczefez</div>
+                    </div>
+                </li>
+        </ul>
+        <div class="bottom_wrapper clearfix">
+            <div class="message_input_wrapper">
+                <input ng-model="message" class="message_input" placeholder="Type your message here..." />
+            </div>
+            <div class="send_message" ng-click="sendMessage(message)">
+                <div class="icon"></div>
+                <div class="text">Send</div>
+            </div>
+        </div>
+    </div>
+    <div class="message_template">
+        <li class="message">
+            <div class="avatar"></div>
+            <div class="text_wrapper">
+                <div class="text"></div>
+            </div>
+        </li>
+    </div>
+</div>
