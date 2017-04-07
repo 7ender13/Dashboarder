@@ -48,16 +48,18 @@ router.post("/", (req, res) => {
             res.status(500);
             console.log("erreur");
             console.log(err);
+            res.end();
         }
         else
         {
             res.status(200);
             console.log('Utilisateur ' + req.body.pseudo + ' ajouté dans mongoDB !');
             console.log(user);
+            res.end();
         }
     });
     
-    res.end();
+    
 });
 
 router.put("/", (req, res) => {
