@@ -7,7 +7,7 @@ const projectModel  = require('../model/projectModel');
 const userModel     = require('../model/userModel');
 
 const mongoose      = require('mongoose');
-
+                    
 router.post("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/post");
@@ -28,59 +28,51 @@ router.post("/", (req, res) => {
             console.log("success");
             console.log(result);
         
-            var pseudos = '{';
+            var pseudos = '[{';
             for(var i = 0; i < req.body.participants.length; i++)
             {
                 if(i != 0)
                 {
                     pseudos += ", ";
                 }
-                userModel.findById(req.body.participants[i].id, (err, result) => {
-                    if(err){
-                        console.log("erreur");
-                        console.log(err);
-                    }
-                    pseudos += "pseudo";
-                    console.log("azeaze");
-                    
-                });
+                
+                pseudos += "\"pseudo\":\"" + req.body.participants[i].pseudo + "\"";
             }
             
-            pseudos += "}";
+            pseudos += "}]";
             
-            console.log("test");
             console.log(pseudos);
             
             var project = new projectModel({
-                name:req.name,
-                creatorName:result.name,
-                description:req.description,
-                
+                name:req.body.name,
+                creatorName:req.body.creatorName,
+                description:req.body.description,
+                daysOff:{},
+                resources:[{}],
+                mileStone:[{}],
+                tasks:[{}],
+                groupTaks:[{}],
+                users:JSON.parse(pseudos)
                 });
     
-            // project.save(function (err) {
-            //     if (err) 
-            //     { 
-            //         res.status(500);
-            //         console.log("erreur");
-            //         console.log(err);
-            //         res.end();
-            //     }
-            //     else
-            //     {
-            //         res.status(200);
-            //         console.log('Projet Ajouté dans mongoDB !');
-            //         console.log(project);
-            //         res.end();
-            //     }
-            // });
-            
-            res.status(200);
-            res.end();
+            project.save(function (err) {
+                if (err) 
+                { 
+                    res.status(409);
+                    console.log("erreur");
+                    console.log(err);
+                    res.end();
+                }
+                else
+                {
+                    res.status(200);
+                    console.log('Projet Ajouté dans mongoDB !');
+                    console.log(project);
+                    res.end();
+                }
+            });
         }
     });
 });
-
-
 
 module.exports = router;

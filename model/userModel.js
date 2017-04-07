@@ -8,7 +8,7 @@ let UserSchema = new Schema({
     surname:{type:String},
     pseudo:{type:String, required:true, unique:true, trim:true},
     password:{type:String, required:true},
-    email:{type:String, required:true},
+    email:{type:String, unique:true, required:true},
     projects:[{
         name:{type:String}
     }]

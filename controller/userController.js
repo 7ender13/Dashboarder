@@ -34,6 +34,26 @@ router.get("/:pseudo", (req, res) => {
     });
 });
 
+router.get("/:pseudo/:password", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("user/get (by pseudo and password)");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+    let pseudo = req.url.split("/")[1];
+    let password = req.url.split("/")[2];
+    
+    userModel.findOne({pseudo:pseudo,password:password}, function(err, result){
+        if(err) {
+            console.log("erreur dans le get user by idents");
+            res.status(405);
+        }
+        else{
+        res.status(200);
+        }
+        res.json(result);
+        res.end();
+    });
+});
 router.post("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("user/post");
