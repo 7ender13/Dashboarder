@@ -8,17 +8,16 @@ let ProjectSchema = new Schema({
     creatorName:{type:String, required:true},
     description:{type:String},
     daysOff:{
-        monday:{type:Boolean},
-        tuesday:{type:Boolean},
-        wednesday:{type:Boolean},
-        thursday:{type:Boolean},
-        friday:{type:Boolean},
-        saturday:{type:Boolean},
-        sunday:{type:Boolean},
+        Mo:{type:Boolean},
+        Tu:{type:Boolean},
+        We:{type:Boolean},
+        Th:{type:Boolean},
+        Fr:{type:Boolean},
+        Sa:{type:Boolean},
+        Su:{type:Boolean},
     },
     resources:[{
         name:{type:String},
-        cost:{type:Number},
         cost:{type:Number},
         type:{type:String}
     }],
@@ -42,7 +41,7 @@ let ProjectSchema = new Schema({
             type:{type:String}
         }]
     }],
-    groupTaks:[{
+    groupTasks:[{
         name:{type:String},
         start:{type:Date},
         end:{type:Date}

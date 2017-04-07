@@ -32,8 +32,6 @@
 <br>
 <button onclick="monUPDATE_PROJECT_USERS()" >UPDATE USERS PROJECT</button>
 
-
-
 <script type="text/javascript">
 
 function monUPDATE_PROJECT_USERS()
@@ -140,7 +138,7 @@ function monUPDATE_PROJECT_RESOURCES()
   
 function monUPDATE_PROJECT_DAYSOFF()
 {
-	  var data = {id:'58e7d7f62de5f6177e790c7c', daysOff: {monday:true, tuesday:true, wednesday:true, thursday:true, friday:true, saturday :false,sunday:false}};
+	  var data = {id:'58e7d7f62de5f6177e790c7c', daysOff: {Mo:true, Tu:true, We:true, Th:true, Fr:true, Sa :false,Su:false}};
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/daysoff",
       type: "PUT",
@@ -177,7 +175,6 @@ function monUPDATE_PROJECT_DESCRIPTION()
       }
     });
   }
-
 
 function monDELETE_PROJECT()
 {
@@ -261,7 +258,7 @@ function monPOST_PROJECT()
 }
 
 function monGET_CHAT()
-  {
+{
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/chat/blabla",
       type: "GET",
@@ -302,7 +299,7 @@ function monPOST_CHAT()
 
 
 function monGETALL()
-  {
+{
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "GET",
@@ -318,8 +315,8 @@ function monGETALL()
     });
   }
   
-  function monGETBYPSEUDO()
-  {
+function monGETBYPSEUDO()
+{
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/user/duff",
       type: "GET",
