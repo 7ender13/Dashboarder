@@ -3,17 +3,265 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-<button onclick="monGETALL()" >GET ALL</button>
-<button onclick="monGETBYPSEUDO()" >GET BY PSEUDO</button>
-<button onclick="monPOST()" >POST</button>
-<button onclick="monUPDATE()" >UPDATE</button>
-<button onclick="monDELETE()" >DELETE</button>
+<button onclick="monGETALL()" >GET ALL USERS</button>
+<button onclick="monGETBYPSEUDO()" >GET USER BY PSEUDO</button>
+<button onclick="monPOST()" >POST USER</button>
+<button onclick="monUPDATE()" >UPDATE USER</button>
+<button onclick="monDELETE()" >DELETE USER</button>
+<br>
+<button onclick="monGET_CHAT()" >GET CHAT BY ID</button>
+<button onclick="monPOST_CHAT()" >POST CHAT</button>
+<br><br>
+<button onclick="monPOST_PROJECT()" >POST PROJECT</button><br>
+<button onclick="monGET_PROJECTS()" >GET PROJECTS</button>
+<button onclick="monGET_PROJECTS_SHARED()" >GET PROJECTS SHARED</button>
+<br>
+<button onclick="monDELETE_PROJECT()" >DELETE PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_DESCRIPTION()" >UPDATE DESCIPTION PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_DAYSOFF()" >UPDATE DAYSOFF PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_RESOURCES()" >UPDATE RESOURCES PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_MILESTONE()" >UPDATE MILESTONE PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_TASKS()" >UPDATE TASKS PROJECT</button>
+
+groupTaks
+users
+
 
 <script type="text/javascript">
+
+function monUPDATE_PROJECT_TASKS()
+{
+
+	  var data = {id:'58e7d7f62de5f6177e790c7c', tasks:{ id:1, name:'', desc:'ma tache 1', percentageProgress:0, start:'07/04/2017', end:'09/04/2017', linkedTask:[]}};
+	  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/tasks",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+function monUPDATE_PROJECT_MILESTONE()
+{
+	  var data = {id:'58e7d7f62de5f6177e790c7c', milestone:[{name:'jalon 1', date:'07/04/2017'}, {name:'jalon 2', date:'08/04/2017'}]};
+	  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/milestone",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+function monUPDATE_PROJECT_RESOURCES()
+{
+	  var data = {id:'58e7d7f62de5f6177e790c7c', resources:[{name:'Homme',cost:3,type:'Masculin'}, {name:'Femme',cost:3,type:'Féminin'}]};
+	  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/resources",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+function monUPDATE_PROJECT_DAYSOFF()
+{
+	  var data = {id:'58e7d7f62de5f6177e790c7c', daysOff: {monday:true, tuesday:true, wednesday:true, thursday:true, friday:true, saturday :false,sunday:false}};
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/daysoff",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+
+function monUPDATE_PROJECT_DESCRIPTION()
+{
+  
+	  var data = {id:'58e7d7f62de5f6177e790c7c', description:'description mis à jour'};
+	
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/description",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+
+
+function monDELETE_PROJECT()
+{
+  
+	  var data = {id:'58e7d5219b96e3e62922c388'};
+	
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project",
+      type: "DELETE",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+}
+  
+function monGET_PROJECTS_SHARED()
+  {
+    var usrPseudo = "test";
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/shared/" + usrPseudo,
+      type: "GET",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+function monGET_PROJECTS()
+  {
+    var usrName = "Dufour";
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/" + usrName,
+      type: "GET",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+  
+function monPOST_PROJECT()
+{
+  var data = {creatorName:'Dufour', name:'Mon Projet BOJO 2',	description:'le projet bojo !',	participants:[{pseudo:'duff'}, {pseudo:'test'}]};
+  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project",
+      type: "POST",
+      data: data,
+	    dataType: "jsonp",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+}
+
+function monGET_CHAT()
+  {
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/chat/blabla",
+      type: "GET",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+
+function monPOST_CHAT()
+{
+  var data = {projectID:'blabla', participant:[{username : 'Thomas Burgio', status : true}, {username : 'Yann Guineau', status : false}],'messages' : [{from : 'Thomas Burgio', message : 'hello'},	{from : 'Yann', message : 'hello'},		{from : 'Cyril Potdevin', message : 'Salut'},		{from : 'Thomas Burgio', message : 'hello'},{from : 'Thomas Burgio', message : 'hello'}	]}
+  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/chat",
+      type: "POST",
+      data: data,
+	    dataType: "jsonp",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+
+
 function monGETALL()
   {
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "GET",
       success: function(a){
         console.log("ok");
@@ -30,7 +278,7 @@ function monGETALL()
   function monGETBYPSEUDO()
   {
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user/duff",
+      url:"https://dashboardcommun-duff013.c9users.io/user/duff",
       type: "GET",
       success: function(a){
         console.log("ok");
@@ -47,10 +295,10 @@ function monGETALL()
 function monPOST()
 {
   
-	  var data = {'name':'aaa', 'surname':'bbb', 'pseudo':'eaaze', 'password':'azerty', 'email':'tibo.t@ynov.com'};
+	  var data = {name:'aaa', surname:'bbb', pseudo:'eaaze', password:'azerty', email:'tibo.t@ynov.com'};
 	
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "POST",
       data: data,
 	    dataType: "jsonp",
@@ -68,10 +316,10 @@ function monPOST()
 function monUPDATE()
 {
   
-	  var data = {'name':'aaa', 'surname':'bbb', 'pseudo':'eaaze', 'password':'azerty', 'email':'tibo.t@ynov.com'};
+	  var data = {name:'aaa', surname:'bbb', pseudo:'eaaze', password:'azerty', email:'tibo.t@ynov.com'};
 	
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "PUT",
       data: data,
 	    dataType: "jsonp",
@@ -89,10 +337,10 @@ function monUPDATE()
 function monDELETE()
 {
   
-	  var data = {'pseudo':'aze'};
+	  var data = {pseudo:'aze'};
 	
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "DELETE",
       data: data,
 	    dataType: "jsonp",

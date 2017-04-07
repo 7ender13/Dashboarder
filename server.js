@@ -12,22 +12,32 @@ const router = express();
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
+<<<<<<< HEAD
 let server = http.createServer(router);
 
 const userCtrl = require("./controller/userController");
+=======
+const userCtrl      = require("./controller/userController");
+const chatCtrl      = require("./controller/chatController");
+const projectCtrl      = require("./controller/projectController");
+>>>>>>> 5b7b0a51e7703f3d4a9091a07c0c5e31d6551eac
 
 mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
-    if(error){
+    if(error)
+    {
         console.log("Connection database : NOK !");
         console.log(error)
     }
-    else{
+    else
+    {
         console.log("Connection database : OK !");
     }
 });
 
 router.use(express.static(path.join(__dirname, 'client/dist')));
 router.use('/user', userCtrl);
+router.use('/chat', chatCtrl);
+router.use('/project', projectCtrl);
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   console.log("-----------------------------------");
