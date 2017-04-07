@@ -8,12 +8,81 @@
 <button onclick="monPOST()" >POST</button>
 <button onclick="monUPDATE()" >UPDATE</button>
 <button onclick="monDELETE()" >DELETE</button>
+<br>
+<button onclick="monGET_CHAT()" >GET CHAT BY ID</button>
+<button onclick="monPOST_CHAT()" >POST CHAT</button>
+<br>
+<button onclick="monPOST_PROJECT()" >POST PROJECT</button>
 
 <script type="text/javascript">
+
+function monPOST_PROJECT()
+{
+  var data = {'creatorID':'58e638eb7b61626bc5bd42f0', 'name':'Mon Projet BOJO',	'description':'le projet bojo !',	'participants':[{'id':'58e62ce2d4204f5e4ceb6d83'}, {'id':'58e63291d4204f5e4ceb6d86'}]};
+  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project",
+      type: "POST",
+      data: data,
+	    dataType: "jsonp",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+}
+
+function monGET_CHAT()
+  {
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/chat/blabla",
+      type: "GET",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+
+function monPOST_CHAT()
+{
+  var data = {'projectID':'blabla', 'participant':[{'username' : 'Thomas Burgio', 'status' : true}, {'username' : 'Yann Guineau', 'status' : false}],'messages' : [{'from' : 'Thomas Burgio', 'message' : 'hello'},	{'from' : 'Yann', 'message' : 'hello'},		{'from' : 'Cyril Potdevin', 'message' : 'Salut'},		{'from' : 'Thomas Burgio', 'message' : 'hello'},{'from' : 'Thomas Burgio', 'message' : 'hello'}	]}
+  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/chat",
+      type: "POST",
+      data: data,
+	    dataType: "jsonp",
+      // headers: {"X-My-Custom-Header": "some value"},
+      success: function(a){
+        console.log("ok");
+        console.log(a);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+  }
+
+
 function monGETALL()
   {
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "GET",
       success: function(a){
         console.log("ok");
@@ -30,7 +99,7 @@ function monGETALL()
   function monGETBYPSEUDO()
   {
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user/duff",
+      url:"https://dashboardcommun-duff013.c9users.io/user/duff",
       type: "GET",
       success: function(a){
         console.log("ok");
@@ -50,7 +119,7 @@ function monPOST()
 	  var data = {'name':'aaa', 'surname':'bbb', 'pseudo':'eaaze', 'password':'azerty', 'email':'tibo.t@ynov.com'};
 	
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "POST",
       data: data,
 	    dataType: "jsonp",
@@ -71,7 +140,7 @@ function monUPDATE()
 	  var data = {'name':'aaa', 'surname':'bbb', 'pseudo':'eaaze', 'password':'azerty', 'email':'tibo.t@ynov.com'};
 	
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "PUT",
       data: data,
 	    dataType: "jsonp",
@@ -92,7 +161,7 @@ function monDELETE()
 	  var data = {'pseudo':'aze'};
 	
     $.ajax({
-      url:"https://dashboarder-duff013.c9users.io/user",
+      url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "DELETE",
       data: data,
 	    dataType: "jsonp",
