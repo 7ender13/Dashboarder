@@ -28,7 +28,7 @@
     {
 
         $stateProvider.state('app.gantt-chart', {
-            url    : '/gantt-chart',
+            url    : '/projet/:id',
             views  : {
                 'content@app': {
                     templateUrl: 'app/main/apps/gantt-chart/gantt-chart.html',
@@ -51,12 +51,12 @@
         $translatePartialLoaderProvider.addPart('app/main/apps/gantt-chart');
 
         // Navigation
-        msNavigationServiceProvider.saveItem('apps.gantt-chart', {
+        /*msNavigationServiceProvider.saveItem('apps.gantt-chart', {
             title : 'Gantt Chart',
             icon  : 'icon-calendar-text',
             state : 'app.gantt-chart',
             weight: 7
-        });
+        });*/
 
         // Api
         msApiProvider.register('ganttChart.tasks', ['app/data/gantt-chart/tasks.json']);

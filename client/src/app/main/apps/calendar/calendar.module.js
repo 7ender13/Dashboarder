@@ -29,12 +29,5 @@
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/apps/calendar');
 
-        // Navigation
-        msNavigationServiceProvider.saveItem('apps.calendar', {
-            title : 'Calendar',
-            icon  : 'icon-calendar-today',
-            state : 'app.calendar',
-            weight: 2
-        });
     }
 })();

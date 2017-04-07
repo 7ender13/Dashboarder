@@ -211,7 +211,7 @@
             for ( var i = 0; i < parts.length; i++ )
             {
                 var _id = parts[i],
-                    createParent = true;
+                    createParent = false;
 
                 for ( var p = 0; p < parent.length; p++ )
                 {
