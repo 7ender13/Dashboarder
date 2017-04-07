@@ -15,6 +15,7 @@
         vm.chat = {};
         vm.chatActive = false;
         vm.replyMessage = '';
+
         vm.currentProject = 0;
 
         $scope.sendMessage = function(message){

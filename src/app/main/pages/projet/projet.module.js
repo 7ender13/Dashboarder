@@ -28,7 +28,7 @@
                     controller : 'ProjetController as vm'
                 }
             },
-            bodyClass: 'projet'
+            bodyClass: 'projet_get'
         });
 
         // Navigation

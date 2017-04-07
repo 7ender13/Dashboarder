@@ -7,9 +7,13 @@
         .controller('ProjetController', ProjetController);
 
     /** @ngInject */
-    function ProjetController()
+    function ProjetController($scope, mySocket)
     {
         var vm = this;
+
+        $scope.changeToRoom = function(projectID){
+            mySocket.emit('goToRoom', {'projectID' : projectID});
+        }
 
     }
 
