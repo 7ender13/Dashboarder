@@ -18,7 +18,7 @@
 <br>
 <button onclick="monDELETE_PROJECT()" >DELETE PROJECT</button>
 <br>
-<button onclick="monUPDATE_PROJECT_DESCRIPTION()" >UPDATE DESCIPTION PROJECT</button>
+<button onclick="monUPDATE_PROJECT_DESCRIPTION()" >UPDATE DESCRIPTION PROJECT</button>
 <br>
 <button onclick="monUPDATE_PROJECT_DAYSOFF()" >UPDATE DAYSOFF PROJECT</button>
 <br>
@@ -27,13 +27,56 @@
 <button onclick="monUPDATE_PROJECT_MILESTONE()" >UPDATE MILESTONE PROJECT</button>
 <br>
 <button onclick="monUPDATE_PROJECT_TASKS()" >UPDATE TASKS PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_GROUPTASKS()" >UPDATE GROUPTASKS PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_USERS()" >UPDATE USERS PROJECT</button>
 
-groupTaks
-users
 
 
 <script type="text/javascript">
 
+function monUPDATE_PROJECT_USERS()
+{
+	  var data = {id:'58e800a94220d84ecf569a52', users:[{pseudo:'Duff'}, {pseudo:'Still'}, {pseudo:'Test'}]};
+	  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/users",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+}
+
+function monUPDATE_PROJECT_GROUPTASKS()
+{
+
+	  var data = {id:'58e800a94220d84ecf569a52', tasks:{ id:1, name:'', desc:'ma tache 1', percentageProgress:0, start:'07/04/2017', end:'09/04/2017', linkedTask:[]}};
+	  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/grouptasks",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+}
+  
 function monUPDATE_PROJECT_TASKS()
 {
 
@@ -197,7 +240,7 @@ function monGET_PROJECTS()
   
 function monPOST_PROJECT()
 {
-  var data = {creatorName:'Dufour', name:'Mon Projet BOJO 2',	description:'le projet bojo !',	participants:[{pseudo:'duff'}, {pseudo:'test'}]};
+  var data = {creatorName:'Dufour', name:'Mon Projet BOJO 3',	description:'le projet bojo !',	participants:[{pseudo:'duff'}, {pseudo:'test'}]};
   
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project",

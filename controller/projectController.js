@@ -325,6 +325,84 @@ router.put("/tasks", (req, res) => {
             {
                 console.log("Projet modifié dans la base");
                 res.status(200);
+                //console.log(updatedProject);
+                res.end();
+            }
+          });
+          
+        }
+    });
+});
+
+router.put("/grouptasks", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("project/updateGroupTasks");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+    projectModel.findOne({_id:req.body.id}, (err, project) => {
+        if(err)
+        {
+            console.log("erreur");
+            res.status(409);
+            res.end();
+        }
+        else
+        {
+            //console.log(project.name);
+            
+            project.groupTasks = req.body.groupTasks;
+
+            project.save((err, updatedProject) => {
+            if (err){
+                console.log("Erreur");
+                console.log(err);
+                
+                res.status(409);
+                res.end();
+            }
+            else
+            {
+                console.log("Projet modifié dans la base");
+                res.status(200);
+                //console.log(updatedProject);
+                res.end();
+            }
+          });
+          
+        }
+    });
+});
+
+router.put("/users", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("project/updateUsers");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+    projectModel.findOne({_id:req.body.id}, (err, project) => {
+        if(err)
+        {
+            console.log("erreur");
+            res.status(409);
+            res.end();
+        }
+        else
+        {
+            //console.log(project.name);
+            
+            project.users = req.body.users;
+
+            project.save((err, updatedProject) => {
+            if (err){
+                console.log("Erreur");
+                console.log(err);
+                
+                res.status(409);
+                res.end();
+            }
+            else
+            {
+                console.log("Projet modifié dans la base");
+                res.status(200);
                 console.log(updatedProject);
                 res.end();
             }
