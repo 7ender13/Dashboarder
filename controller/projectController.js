@@ -6,7 +6,26 @@ const projectModel  = require('../model/projectModel');
 const userModel     = require('../model/userModel');
 
 const mongoose      = require('mongoose');
+const socket        = require('socket.io-client');
+let client          = socket.connect('https://c9.seefox.fr', {reconnect: true});
 
+client.on('connect', () => {
+  console.log('connected')
+});
+
+client.on('info', (data) => {
+    console.log('info');
+    console.log(data);
+});
+
+client.on('projectUpdated', (data) => {
+    console.log('-------------------------------');
+    console.log('-------------------------------');
+    console.log('projectUpdated');
+    console.log(data);
+    console.log('-------------------------------');
+    console.log('-------------------------------');
+});
 
 //Controller **PROJET**
 
@@ -127,6 +146,16 @@ router.get("/shared/:name", (req, res) => {
         
     });
 });
+
+router.get("/read", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("project/get (all project in read access)");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+});
+
+
+
 
 // Méthode `DELETE` supprime le projet par son _id_ 
 router.delete("/", (req, res) => {
@@ -365,5 +394,120 @@ router.put("/tasks", (req, res) => {
         }
     });
 });
+
+// Méthode `PUT` permet de mettre à jour le groupe de tache d'un projet par _id_
+router.put("/grouptasks", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("project/updateGroupTasks");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+    // on cherche le projet dans la base qui a l'_id_ passé dans le corps de la requête
+    projectModel.findOne({_id:req.body.id}, (err, project) => {
+        if(err)
+        {
+            //si on ne trouve pas, retourne erreur `HTTP` 409 : CONFLICT
+            console.log("erreur");
+            res.status(409);
+            res.end();
+        }
+        else
+        {
+            // le groupe de tache passées dans le corps de la requête
+            project.groupTasks = req.body.groupTasks;
+
+            // on sauvegarde le projet en question
+            project.save((err, updatedProject) => {
+            if (err){
+                console.log("Erreur");
+                console.log(err);
+                //si erreur, retourne erreur `HTTP` 409 : CONFLICT
+                res.status(409);
+                res.end();
+            }
+            else
+            {
+                console.log("Projet modifié dans la base");
+                res.status(200);
+                //sinon, on retourne `HTTP` 200 : OK
+                sendUpdate(req.body.nameOfService);
+                res.end();
+            }
+          });
+          
+        }
+    });
+});
+
+// Méthode `PUT` permet de mettre à jour les utilisateurs d'un projet par _id_
+router.put("/users", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("project/updateUsers");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+     // on cherche le projet dans la base qui a l'_id_ passé dans le corps de la requête
+    projectModel.findOne({_id:req.body.id}, (err, project) => {
+        if(err)
+        {
+            //si on ne le trouve pas, retourne erreur `HTTP` 409 : CONFLICT
+            console.log("erreur");
+            res.status(409);
+            res.end();
+        }
+        else
+        {
+            // si l'éditeur est égale au créateur
+            if(req.body.editorName === project.creatorName)
+            {
+                // les utilisateurs sont passés dans le corps de la requête
+                project.users = req.body.users;
+
+                // on sauvegarde le projet en question
+                project.save((err, updatedProject) => {
+                    if (err){
+                        console.log("Erreur");
+                        console.log(err);
+                        //si erreur, retourne erreur `HTTP` 409 : CONFLICT
+                        res.status(409);
+                        res.end();
+                    }
+                    else
+                    {
+                        console.log("Projet modifié dans la base");
+                        res.status(200);
+                        //sinon, on retourne `HTTP` 200 : OK en envoyant le notif d'update
+                        sendUpdate(req.body.nameOfService);
+                        res.end();
+                    }
+                });
+            }
+            else
+            {
+                console.log("Erreur");
+                console.log(err);
+                //si erreur, retourne erreur `HTTP` 401 : NON AUTHORIZED
+                res.status(401);
+                res.end();
+            }
+        }
+    });
+});
+
+// **fonction** sendUpdate, permet d'envoyer la notification d'un service
+function sendUpdate(nameOfService)
+{
+    // on récupere tous les projets
+    projectModel.find({}, (err, result)=>{
+        
+        //on créé un service avec le nom et un ensemble de projet
+        let service = new serviceModel({
+            nameService:nameOfService,
+            projects:result
+        });
+        
+        //on envoi le service via socket attaché à l'évènement sendUpdate
+        client.emit('sendUpdate', JSON.stringify(service));
+    });
+}
+
 
 module.exports = router;

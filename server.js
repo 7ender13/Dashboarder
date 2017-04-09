@@ -6,8 +6,7 @@ const mongoose      = require('mongoose');
 const express       = require('express');
 const bodyParser    = require('body-parser');
 const socketio      = require('socket.io');
-
-const router = express();
+const router        = express();
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -26,7 +25,8 @@ mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
     }
 });
 
-router.use(express.static(path.join(__dirname, 'client/dist')));
+
+router.use(express.static(path.join(__dirname, 'client_old/')));
 
 const userCtrl    = require("./controller/userController");
 const chatCtrl    = require("./controller/chatController");

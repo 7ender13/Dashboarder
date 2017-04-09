@@ -18,7 +18,7 @@
 <br>
 <button onclick="monDELETE_PROJECT()" >DELETE PROJECT</button>
 <br>
-<button onclick="monUPDATE_PROJECT_DESCRIPTION()" >UPDATE DESCIPTION PROJECT</button>
+<button onclick="monUPDATE_PROJECT_DESCRIPTION()" >UPDATE DESCRIPTION PROJECT</button>
 <br>
 <button onclick="monUPDATE_PROJECT_DAYSOFF()" >UPDATE DAYSOFF PROJECT</button>
 <br>
@@ -27,17 +27,58 @@
 <button onclick="monUPDATE_PROJECT_MILESTONE()" >UPDATE MILESTONE PROJECT</button>
 <br>
 <button onclick="monUPDATE_PROJECT_TASKS()" >UPDATE TASKS PROJECT</button>
-
-groupTaks
-users
-
+<br>
+<button onclick="monUPDATE_PROJECT_GROUPTASKS()" >UPDATE GROUPTASKS PROJECT</button>
+<br>
+<button onclick="monUPDATE_PROJECT_USERS()" >UPDATE USERS PROJECT</button>
 
 <script type="text/javascript">
 
+function monUPDATE_PROJECT_USERS()
+{
+	  var data = {id:'58ea7060ee4efc0cade98a16', nameOfService:'test service M2', editorName:'Dufour', users:[{pseudo:'Duff'}, {pseudo:'Still'}, {pseudo:'Test'}]};
+	  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/users",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+}
+
+function monUPDATE_PROJECT_GROUPTASKS()
+{
+
+	  var data = {id:'58ea7060ee4efc0cade98a16', nameOfService:'test service M2', tasks:{ id:1, name:'', desc:'ma tache 1', percentageProgress:0, start:'07/04/2017', end:'09/04/2017', linkedTask:[]}};
+	  
+    $.ajax({
+      url:"https://dashboardcommun-duff013.c9users.io/project/grouptasks",
+      type: "PUT",
+      data: data,
+	    dataType: "jsonp",
+      success: function(a){
+        console.log("ok");
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+		    console.log(xhr.responseText);
+        console.log	(thrownError);
+      }
+    });
+}
+  
 function monUPDATE_PROJECT_TASKS()
 {
 
-	  var data = {id:'58e7d7f62de5f6177e790c7c', tasks:{ id:1, name:'', desc:'ma tache 1', percentageProgress:0, start:'07/04/2017', end:'09/04/2017', linkedTask:[]}};
+	  var data = {id:'58ea7060ee4efc0cade98a16', nameOfService:'test service M2', tasks:{ id:1, name:'', desc:'ma tache 1', percentageProgress:0, start:'07/04/2017', end:'09/04/2017', linkedTask:[]}};
 	  
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/tasks",
@@ -57,7 +98,7 @@ function monUPDATE_PROJECT_TASKS()
   
 function monUPDATE_PROJECT_MILESTONE()
 {
-	  var data = {id:'58e7d7f62de5f6177e790c7c', milestone:[{name:'jalon 1', date:'07/04/2017'}, {name:'jalon 2', date:'08/04/2017'}]};
+	  var data = {id:'58ea7060ee4efc0cade98a16', nameOfService:'test service M2', editorName:'Dufour', milestone:[{name:'jalon 1', date:'07/04/2017'}, {name:'jalon 2', date:'08/04/2017'}]};
 	  
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/milestone",
@@ -77,7 +118,7 @@ function monUPDATE_PROJECT_MILESTONE()
   
 function monUPDATE_PROJECT_RESOURCES()
 {
-	  var data = {id:'58e7d7f62de5f6177e790c7c', resources:[{name:'Homme',cost:3,type:'Masculin'}, {name:'Femme',cost:3,type:'Féminin'}]};
+	  var data = {id:'58ea7060ee4efc0cade98a16', nameOfService:'test service M2', editorName:'Dufour', resources:[{name:'Homme',cost:3,type:'Masculin'}, {name:'Femme',cost:3,type:'Féminin'}]};
 	  
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/resources",
@@ -97,7 +138,7 @@ function monUPDATE_PROJECT_RESOURCES()
   
 function monUPDATE_PROJECT_DAYSOFF()
 {
-	  var data = {id:'58e7d7f62de5f6177e790c7c', daysOff: {monday:true, tuesday:true, wednesday:true, thursday:true, friday:true, saturday :false,sunday:false}};
+	  var data = {id:'58ea7060ee4efc0cade98a16', nameOfService:'test service M2', editorName:'Dufour', workingDays:{daysOff: {Mo:true, Tu:true, We:true, Th:true, Fr:true, Sa :false,Su:false}, workingHours:{start:'08:00', end:'17:00'}}};
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/daysoff",
       type: "PUT",
@@ -117,7 +158,7 @@ function monUPDATE_PROJECT_DAYSOFF()
 function monUPDATE_PROJECT_DESCRIPTION()
 {
   
-	  var data = {id:'58e7d7f62de5f6177e790c7c', description:'description mis à jour'};
+	  var data = {id:'58ea7060ee4efc0cade98a16', nameOfService:'test service M2', editorName:'Dufour', description:'description mis à jour'};
 	
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/description",
@@ -134,7 +175,6 @@ function monUPDATE_PROJECT_DESCRIPTION()
       }
     });
   }
-
 
 function monDELETE_PROJECT()
 {
@@ -158,7 +198,7 @@ function monDELETE_PROJECT()
 }
   
 function monGET_PROJECTS_SHARED()
-  {
+{
     var usrPseudo = "test";
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/shared/" + usrPseudo,
@@ -177,7 +217,7 @@ function monGET_PROJECTS_SHARED()
   }
   
 function monGET_PROJECTS()
-  {
+{
     var usrName = "Dufour";
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project/" + usrName,
@@ -197,7 +237,7 @@ function monGET_PROJECTS()
   
 function monPOST_PROJECT()
 {
-  var data = {creatorName:'Dufour', name:'Mon Projet BOJO 2',	description:'le projet bojo !',	participants:[{pseudo:'duff'}, {pseudo:'test'}]};
+  var data = {nameOfService:'test service M2', creatorName:'Dufour', name:'Mon Projet z',	description:'le projet',	participants:[{pseudo:'duff'}, {pseudo:'test'}]};
   
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/project",
@@ -218,7 +258,7 @@ function monPOST_PROJECT()
 }
 
 function monGET_CHAT()
-  {
+{
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/chat/blabla",
       type: "GET",
@@ -257,9 +297,8 @@ function monPOST_CHAT()
     });
   }
 
-
 function monGETALL()
-  {
+{
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/user",
       type: "GET",
@@ -275,8 +314,8 @@ function monGETALL()
     });
   }
   
-  function monGETBYPSEUDO()
-  {
+function monGETBYPSEUDO()
+{
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/user/duff",
       type: "GET",
@@ -295,7 +334,7 @@ function monGETALL()
 function monPOST()
 {
   
-	  var data = {name:'aaa', surname:'bbb', pseudo:'eaaze', password:'azerty', email:'tibo.t@ynov.com'};
+	  var data = {name:'aaaaaz', surname:'bbbeb', pseudo:'eaazezee', password:'azerty', email:'taiazebo.t@ynov.com', service:'m2 test'};
 	
     $.ajax({
       url:"https://dashboardcommun-duff013.c9users.io/user",

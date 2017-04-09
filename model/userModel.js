@@ -18,7 +18,8 @@ let UserSchema = new Schema({
     //Nom des projets
     projects:[{
         name:{type:String}
-    }]
+    }],
+    service:{type:String}
 });
 
 module.exports = mongoose.model('User', UserSchema);
