@@ -4,11 +4,7 @@
 
     angular
         .module('app.todo',
-            [
-                // 3rd Party Dependencies
-                'ng-sortable',
-                'textAngular'
-            ]
+            []
         )
         .config(config);
 
@@ -24,25 +20,9 @@
                     controller : 'TodoController as vm'
                 }
             },
-            resolve  : {
-                Tasks: function (msApi)
-                {
-                    return msApi.resolve('todo.tasks@get');
-                },
-                Tags : function (msApi)
-                {
-                    return msApi.resolve('todo.tags@get');
-                }
-            },
             bodyClass: 'todo'
         });
 
-        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/apps/todo');
-
-        // Api
-        msApiProvider.register('todo.tasks', ['app/data/todo/tasks.json']);
-        msApiProvider.register('todo.tags', ['app/data/todo/tags.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('apps.to-do', {

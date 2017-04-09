@@ -31,14 +31,16 @@ router.use(express.static(path.join(__dirname, 'client/dist')));
 const userCtrl    = require("./controller/userController");
 const chatCtrl    = require("./controller/chatController");
 const projectCtrl = require("./controller/projectController");
+const todoCtrl = require("./controller/todoController");
 
 router.use('/user', userCtrl);
 router.use('/chat', chatCtrl);
 router.use('/project', projectCtrl);
+router.use('/todo', todoCtrl);
 
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
+server.listen(3000, 'localhost', function(){
   console.log("-----------------------------------");
-  console.log("Serveur en écoute sur le port " + process.env.PORT);
+  console.log("Serveur en écoute sur le port " + 3000);
   console.log("-----------------------------------");
 });
 
