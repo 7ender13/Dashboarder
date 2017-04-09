@@ -11,8 +11,8 @@ client.on('connect', () => {
   console.log('connected')
 });
 
-client.on('projectUpdated', (data) => {
-    console.log('projectUpdated');
+client.on('projectaUpdated', (data) => {
+    console.log('projectUpdated in serviceController');
     console.log(data);
     updateProject(data);
 });

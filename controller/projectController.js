@@ -11,21 +11,7 @@ const socket        = require('socket.io-client');
 let client          = socket.connect('https://c9.seefox.fr', {reconnect: true});
 
 client.on('connect', () => {
-  console.log('connected')
-});
-
-client.on('info', (data) => {
-    console.log('info');
-    console.log(data);
-});
-
-client.on('projectUpdated', (data) => {
-    console.log('-------------------------------');
-    console.log('-------------------------------');
-    console.log('projectUpdated');
-    console.log(data);
-    console.log('-------------------------------');
-    console.log('-------------------------------');
+  console.log('connected');
 });
 
 router.post("/", (req, res) => {
