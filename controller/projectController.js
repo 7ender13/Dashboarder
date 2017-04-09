@@ -28,7 +28,6 @@ client.on('projectUpdated', (data) => {
     console.log('-------------------------------');
 });
 
-
 router.post("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/post");
@@ -148,13 +147,6 @@ router.get("/shared/:name", (req, res) => {
         }
         
     });
-});
-
-router.get("/read", (req, res) => {
-    console.log("-->-->-->-->-->-->-->-->-->--");
-    console.log("project/get (all project in read access)");
-    console.log("-->-->-->-->-->-->-->-->-->--");
-    
 });
 
 router.delete("/", (req, res) => {
