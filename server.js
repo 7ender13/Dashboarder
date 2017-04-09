@@ -26,17 +26,21 @@ mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
 });
 
 
-router.use(express.static(path.join(__dirname, 'client/dist')));
+router.use(express.static(path.join(__dirname, 'client_old/')));
 
 const userCtrl    = require("./controller/userController");
 const chatCtrl    = require("./controller/chatController");
 const projectCtrl = require("./controller/projectController");
 const todoCtrl = require("./controller/todoController");
+const todoCtrl = require("./controller/todoController");
+const serviceCtrl = require("./controller/serviceController");
 
 router.use('/user', userCtrl);
 router.use('/chat', chatCtrl);
 router.use('/project', projectCtrl);
 router.use('/todo', todoCtrl);
+router.use('/service', serviceCtrl);
+
 
 server.listen(3000, 'localhost', function(){
   console.log("-----------------------------------");
