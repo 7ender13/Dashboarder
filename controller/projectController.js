@@ -106,10 +106,20 @@ router.get("/:name", (req, res) => {
     let pseudo = req.url.split("/")[1];
     
     projectModel.find({creatorName:pseudo}, (err, result) => {
-        if(err) console.log("erreur dans le get all");
-        res.status(200);
-        res.json(result);
-        res.end();
+        if(err)
+        {
+            console.log("erreur dans le get all");
+            console.log(err);
+            res.status(409);
+            res.end();
+        }
+        else
+        {
+            res.status(200);
+            res.json(result);
+            res.end();
+        }
+        
     });
 });
 

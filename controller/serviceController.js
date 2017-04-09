@@ -17,6 +17,31 @@ client.on('projectUpdated', (data) => {
     updateProject(data);
 });
 
+router.get("/:name", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("service/get (all except name)");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+    let nameOfMyService = req.url.split("/")[1];
+    
+    serviceModel.find({nameService:{$not:nameOfMyService}}, (err, result) => {
+        if(err)
+        {
+            console.log("erreur dans le get");
+            console.log(err);
+            res.status(409);
+            res.end();
+        }
+        else
+        {
+            res.status(200);
+            res.json(result);
+            res.end();
+        }
+        
+    });
+});
+
 
 function updateProject(data)
 {
