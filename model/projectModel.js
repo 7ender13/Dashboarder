@@ -3,25 +3,28 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+//modele du **projet**
 let ProjectSchema = new Schema({
+    // Nom du projet, requis
     name:{type:String, required:true, unique:true, trim:true},
+    //Nom du créateur, requis
     creatorName:{type:String, required:true},
+    //Description du projet
     description:{type:String},
+    //Jours de la semaine du projet
     daysOff:{
-        Mo:{type:Boolean},
-        Tu:{type:Boolean},
-        We:{type:Boolean},
-        Th:{type:Boolean},
-        Fr:{type:Boolean},
-        Sa:{type:Boolean},
-        Su:{type:Boolean},
+        monday:{type:Boolean},
+        tuesday:{type:Boolean},
+        wednesday:{type:Boolean},
+        thursday:{type:Boolean},
+        friday:{type:Boolean},
+        saturday:{type:Boolean},
+        sunday:{type:Boolean},
     },
-    workingHours : { 
-        start : {type:String}, 
-        end : {type:String} 
-    },
+    // les ressources (nom et coût) du projet
     resources:[{
         name:{type:String},
+        cost:{type:Number},
         cost:{type:Number},
         type:{type:String}
     }],
@@ -29,6 +32,7 @@ let ProjectSchema = new Schema({
         name:{type:String},
         date:{type:Date}
     }],
+    //les taches : nom, description, pourcentage d'accomplissement, date de début, date de fin, et si la tâche est liée, l'id correspondant, ainsi que les ressources reliées 
     tasks:[{
         id:{type:Number},
         name:{type:String},
@@ -45,11 +49,13 @@ let ProjectSchema = new Schema({
             type:{type:String}
         }]
     }],
-    groupTasks:[{
+    //l'ensemble de tâche auquel elle est liée
+    groupTaks:[{
         name:{type:String},
         start:{type:Date},
         end:{type:Date}
     }],
+    //les utilisateurs affectés
     users:[{
         pseudo:{type:String}
     }]
