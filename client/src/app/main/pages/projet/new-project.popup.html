@@ -1,0 +1,52 @@
+<md-dialog aria-label="Ajouter un projet">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Ajouter un projet !</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="assets/angular-material-assets/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="padding : 0;">
+      <div class="md-dialog-content">
+          <md-input-container class="md-block" md-no-float>
+              <input style="font-size:16px;" type="text" ng-model="ctrl.name" placeholder="Nom du projet"
+                     required>
+          </md-input-container>
+          <md-input-container class="md-block" md-no-float>
+              <textarea style="font-size:16px;min-width:420px;" placeholder="Description" ng-model="ctrl.desc" rows="7" required></textarea>
+          </md-input-container>
+
+      </div>
+    </md-dialog-content>
+    <md-dialog-content>
+        <div ng-controller="ProjetController as ctrl" layout="column" ng-cloak>
+          <md-content class="md-padding autocomplete" layout="column">
+            <md-contact-chips
+                ng-model="ctrl.contacts"
+
+                md-contacts="ctrl.querySearch($query)"
+                md-contact-name="name"
+                md-contact-image="image"
+                md-contact-email="email"
+                md-require-match="true"
+                md-highlight-flags="i"
+                filter-selected="ctrl.filterSelected"
+                placeholder="Collaborateurs">
+            </md-contact-chips>
+          </md-content>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()">
+       Annuler
+      </md-button>
+      <md-button ng-click="create(ctrl.name, ctrl.desc,ctrl.filterSelected )">
+        Ajouter
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

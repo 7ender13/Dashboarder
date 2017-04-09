@@ -91,7 +91,7 @@
         function addNewTask()
         {
             vm.chartData.getById(vm.taskRowId).tasks.push(angular.copy(vm.task));
-
+            console.log(vm.task);
             closeDialog();
         }
 
@@ -101,8 +101,9 @@
         function saveTask()
         {
             dialogData.formData.model = vm.task;
-
+            console.log(vm.task);
             closeDialog();
+
         }
 
         /**

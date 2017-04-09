@@ -1,44 +1,24 @@
-<div class="main animate-slide-left" ng-hide="vm.chatActive">
+<div class="main animate-slide-left" ng-hide="vm.conversation.length">
     <div class="chat_window">
         <div class="top_menu">
             <div class="buttons">
-                <div class="avatar-wrapper">
+                <div ng-repeat="participant in vm.conversation.participant" class="avatar-wrapper">
                     <img md-menu-align-target="" class="avatar" src="assets/images/avatars/profile.jpg">
-                    <md-icon style="position: absolute;bottom: -5px;right: 5px;color: rgb(76, 175, 80);" md-font-icon="" class="icon status s16 md-default-theme material-icons icon-checkbox-marked-circle">
+                    <md-icon ng-if="participant.status" style="position: absolute;bottom: -5px;right: 5px;color: rgb(76, 175, 80);" md-font-icon="" class="icon status s16 md-default-theme material-icons icon-checkbox-marked-circle">
                     </md-icon>
                     <md-tooltip md-direction="bottom">
-                        Thomas Burgio
-                    </md-tooltip>
-                </div>
-                <div class="avatar-wrapper">
-                    <img md-menu-align-target="" class="avatar" src="assets/images/avatars/profile.jpg">
-                    <md-icon style="position: absolute;bottom: -5px;right: 5px;color: rgb(76, 175, 80);" md-font-icon="" class="icon status s16 md-default-theme material-icons icon-checkbox-marked-circle">
-                    </md-icon>
-                    <md-tooltip md-direction="bottom">
-                        Thomas Burgio
-                    </md-tooltip>
-                </div>
-                <div class="avatar-wrapper">
-                    <img md-menu-align-target="" class="avatar" src="assets/images/avatars/profile.jpg">
-                    <md-tooltip md-direction="bottom">
-                        Thomas Burgio
+                        {{participant.username}}
                     </md-tooltip>
                 </div>
             </div>
         </div>
         <ul class="messages">
-            <li class="message left">
+            <li ng-repeat="message in vm.conversation.messages" ng-class="(message.from == mySelf) ? 'right' : 'left'" class="message">
                 <div class="avatar"></div>
                 <div class="text_wrapper">
-                    <div class="text">vcdfvfdev</div>
+                    <div class="text">{{message.message}}</div>
                 </div>
             </li>
-                <li class="message right">
-                    <div class="avatar"></div>
-                    <div class="text_wrapper">
-                        <div class="text">fczefez</div>
-                    </div>
-                </li>
         </ul>
         <div class="bottom_wrapper clearfix">
             <div class="message_input_wrapper">

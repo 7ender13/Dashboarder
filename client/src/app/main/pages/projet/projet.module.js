@@ -20,24 +20,13 @@
             bodyClass: 'projet'
         });
 
-        $stateProvider.state('app.pages_projet_get', {
-            url      : '/projet/:id',
-            views    : {
-                'content@app': {
-                    templateUrl: 'app/main/pages/projet/get/projet.html',
-                    controller : 'ProjetController as vm'
-                }
-            },
-            bodyClass: 'projet_get'
-        });
-
         // Navigation
-        /*msNavigationServiceProvider.saveItem('pages.profile', {
-            title : 'Profile',
+        msNavigationServiceProvider.saveItem('pages.projet', {
+            title : 'Projects',
             icon  : 'icon-account',
-            state : 'app.pages_profile',
+            state : 'app.pages_projet',
             weight: 6
-        });*/
+        });
     }
 
 })();
