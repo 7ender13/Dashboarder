@@ -6,17 +6,8 @@ const mongoose      = require('mongoose');
 const express       = require('express');
 const bodyParser    = require('body-parser');
 const socketio      = require('socket.io');
-
-const router = express();
-
-<<<<<<< HEAD
-const express         = require('express');
-const bodyParser      = require('body-parser');
 const router        = express();
-const server          = http.createServer(router);
 
-=======
->>>>>>> 28632db8e8f31bb0cfcee34e32086b17a4eac2c0
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -34,16 +25,13 @@ mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
     }
 });
 
-<<<<<<< HEAD
-router.use(express.static(path.join(__dirname, 'client_old')));
-=======
+
 router.use(express.static(path.join(__dirname, 'client/dist')));
 
 const userCtrl    = require("./controller/userController");
 const chatCtrl    = require("./controller/chatController");
 const projectCtrl = require("./controller/projectController");
 
->>>>>>> 28632db8e8f31bb0cfcee34e32086b17a4eac2c0
 router.use('/user', userCtrl);
 router.use('/chat', chatCtrl);
 router.use('/project', projectCtrl);
