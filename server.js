@@ -4,12 +4,13 @@ const http          = require('http');
 const path          = require('path');
 const mongoose      = require('mongoose');
 
-let express         = require('express');
-let bodyParser      = require('body-parser');
+const express         = require('express');
+const bodyParser      = require('body-parser');
 const router        = express();
+const server          = http.createServer(router);
+
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-let server          = http.createServer(router);
 
 const userCtrl      = require("./controller/userController");
 const chatCtrl      = require("./controller/chatController");
@@ -28,7 +29,7 @@ mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
     }
 });
 
-router.use(express.static(path.join(__dirname, 'client/dist')));
+router.use(express.static(path.join(__dirname, 'client_old')));
 router.use('/user', userCtrl);
 router.use('/chat', chatCtrl);
 router.use('/project', projectCtrl);
