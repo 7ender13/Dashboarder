@@ -110,11 +110,22 @@ router.get("/:name", (req, res) => {
     
     // On cherche le _projet_ en question
     projectModel.find({creatorName:pseudo}, (err, result) => {
-        // S'il n'y a pas d'erreur, on retourne un `HTTP` 200 : OK avec le resultat
-        if(err) console.log("erreur dans le get all");
-        res.status(200);
-        res.json(result);
-        res.end();
+        if(err)
+        {
+            // S'il y a une erreur, on retourne un `HTTP` 409 : CONFLICT
+            console.log("erreur dans le get all");
+            console.log(err);
+            res.status(409);
+            res.end();
+        }
+        else
+        {
+            // S'il n'y a pas d'erreur, on retourne un `HTTP` 200 : OK avec le resultat
+            res.status(200);
+            res.json(result);
+            res.end();
+        }
+        
     });
 });
 

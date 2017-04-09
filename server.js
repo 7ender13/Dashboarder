@@ -31,10 +31,12 @@ router.use(express.static(path.join(__dirname, 'client_old/')));
 const userCtrl    = require("./controller/userController");
 const chatCtrl    = require("./controller/chatController");
 const projectCtrl = require("./controller/projectController");
+const serviceCtrl = require("./controller/serviceController");
 
 router.use('/user', userCtrl);
 router.use('/chat', chatCtrl);
 router.use('/project', projectCtrl);
+router.use('/service', serviceCtrl);
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   console.log("-----------------------------------");
