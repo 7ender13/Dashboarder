@@ -12,6 +12,7 @@
     "express": "^4.15.2",
     "mongoose": "^4.9.0",
     "objectid": "^3.2.1",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
   }
 }
