@@ -6,16 +6,20 @@ const projectModel  = require('../model/projectModel');
 const userModel     = require('../model/userModel');
 
 const mongoose      = require('mongoose');
-                    
+
+
+//Controller **PROJET**
+
+// Méthode `POST` permet de créer un projet             
 router.post("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/post");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
-    //console.log(req.body);
-    
+    // Recherche du _createur_ du projet
     userModel.find({name:req.body.creatorName}, (err, result)=>{
         if(err){
+             //si erreur, retourne erreur `HTTP` 409 : CONFLICT
             console.log(err);
             console.log("erreur");
             res.status(409);
@@ -24,7 +28,7 @@ router.post("/", (req, res) => {
         else
         {
             console.log("success");
-            //console.log(result);
+            //sinon, l'_utilisateur_ a été trouvé, alors on genere un tableau avec les participants
         
             let pseudos = '[{';
             
@@ -40,8 +44,7 @@ router.post("/", (req, res) => {
             
             pseudos += "}]";
             
-            //console.log(pseudos);
-            
+            //On instancie un nouveau _projet_ à partir du _modèle_ avec son nom, le nom du créateur et les participants
             let project = new projectModel({
                 name:req.body.name,
                 creatorName:req.body.creatorName,
@@ -53,10 +56,12 @@ router.post("/", (req, res) => {
                 groupTaks:[{}],
                 users:JSON.parse(pseudos)
                 });
-    
+            
+            // On sauvegarde le _projet_
             project.save((err) => {
                 if (err) 
                 { 
+                   //si erreur, retourne erreur `HTTP` 409 : CONFLICT
                     res.status(409);
                     console.log("erreur");
                     console.log(err);
@@ -64,6 +69,7 @@ router.post("/", (req, res) => {
                 }
                 else
                 {
+                    //sinon, on retourne `HTTP` 200 : OK
                     res.status(200);
                     console.log('Projet Ajouté dans mongoDB !');
                     //console.log(project);
@@ -74,14 +80,18 @@ router.post("/", (req, res) => {
     });
 });
 
+// Méthode `GET` recupère le _projet_ grâce au _nom_ du propriétaire de celui-ci
 router.get("/:name", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/get (all by user (owner) name)");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
+    // On récupère le 1er paramètre de l'`URL`, le _pseudo_ du propriétaire
     let pseudo = req.url.split("/")[1];
     
+    // On cherche le _projet_ en question
     projectModel.find({creatorName:pseudo}, (err, result) => {
+        // S'il n'y a pas d'erreur, on retourne un `HTTP` 200 : OK avec le resultat
         if(err) console.log("erreur dans le get all");
         res.status(200);
         res.json(result);
@@ -89,26 +99,28 @@ router.get("/:name", (req, res) => {
     });
 });
 
+// Méthode `GET` recupère le(s) _projet(s)_ dont un des utilisateurs affectés a le _nom_ fournit en _paramètre_
 router.get("/shared/:name", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/get (all project shared by user name)");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
+    // On récupère le 2ème (/shared/..) paramètre de l'`URL`, le _pseudo_ en question
     let lePseudo = req.url.split("/")[2];
     
-    //console.log(lePseudo);
+    // On recherche l'utilisateur qui a ce pseudo
     projectModel.find({'users.pseudo' : lePseudo}, (err, result) => {
         if(err)
         {
+            //si erreur, retourne erreur `HTTP` 409 : CONFLICT
             console.log("erreur dans le get all");
-            
-            res.status(200);
+            res.status(409);
             res.end();
         }
         else
         {
+            //sinon, on retourne `HTTP` 200 : OK avec l'utilisateur
             res.status(200);
-            //console.log(result);
             res.json(result);
             res.end();
         }
@@ -116,22 +128,23 @@ router.get("/shared/:name", (req, res) => {
     });
 });
 
+// Méthode `DELETE` supprime le projet par son _id_ 
 router.delete("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/delete");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
-    //console.log(req.body);
-    
+    // on supprime le projet dans la base qui a l'_id_ passé dans le corps de la requête
     projectModel.remove({_id:req.body.id}, (err) => {
         if(err){
+            //si erreur, retourne erreur `HTTP` 409 : CONFLICT
             console.log("erreur dans la suppression");
-            
             res.status(409);
             res.end();
         }
         else
         {
+            //sinon, on retourne `HTTP` 200 : OK
             console.log("Projet supprimé");
             res.status(200);
             res.end();
@@ -139,37 +152,40 @@ router.delete("/", (req, res) => {
     })
 });
 
+// Méthode `PUT` permet de mettre à jour la _description_ d'un projet par id
 router.put("/description", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/updateDescription");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
+    // on cherche le projet dans la base qui a l'_id_ passé dans le corps de la requête
     projectModel.findOne({_id:req.body.id}, (err, project) => {
         if(err)
         {
+              //si on ne trouve pas, retourne erreur `HTTP` 409 : CONFLICT
             console.log("erreur");
             res.status(409);
             res.end();
         }
         else
         {
-            //console.log(project.name);
-            
+            // la description est passée dans le corps de la requête
             project.description = req.body.description;
           
+            // on sauvegarde le projet en question
             project.save((err, updatedProject) => {
             if (err){
+                //si erreur, retourne erreur `HTTP` 409 : CONFLICT
                 console.log("Erreur");
                 console.log(err);
-                
                 res.status(409);
                 res.end();
             }
             else
             {
+                //sinon, on retourne `HTTP` 200 : OK
                 console.log("Projet modifié dans la base");
                 res.status(200);
-                //console.log(updatedProject);
                 res.end();
             }
           });
@@ -178,37 +194,41 @@ router.put("/description", (req, res) => {
     });
 });
 
+
+// Méthode `PUT` permet de mettre à jour les jours _off_ d'un projet par _id_
 router.put("/daysoff", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/updateDaysOff");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
+    // on cherche le projet dans la base qui a l'_id_ passé dans le corps de la requête
     projectModel.findOne({_id:req.body.id}, (err, project) => {
         if(err)
         {
+            //si on ne trouve pas, retourne erreur `HTTP` 409 : CONFLICT
             console.log("erreur");
             res.status(409);
             res.end();
         }
         else
         {
-            //console.log(project.name);
-            
+            // les jours off sont passés dans le corps de la requête
             project.daysOff = req.body.daysOff;
           
+          // on sauvegarde le projet en question
             project.save((err, updatedProject) => {
             if (err){
                 console.log("Erreur");
                 console.log(err);
-                
+                //si erreur, retourne erreur `HTTP` 409 : CONFLICT
                 res.status(409);
                 res.end();
             }
             else
             {
+                //sinon, on retourne `HTTP` 200 : OK
                 console.log("Projet modifié dans la base");
                 res.status(200);
-                //console.log(updatedProject);
                 res.end();
             }
           });
@@ -217,37 +237,41 @@ router.put("/daysoff", (req, res) => {
     });
 });
 
+// Méthode `PUT` permet de mettre à jour les ressources d'un projet par _id_
 router.put("/resources", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/updateResources");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
+    // on cherche le projet dans la base qui a l'_id_ passé dans le corps de la requête
     projectModel.findOne({_id:req.body.id}, (err, project) => {
         if(err)
         {
+            //si on ne trouve pas, retourne erreur `HTTP` 409 : CONFLICT
             console.log("erreur");
             res.status(409);
             res.end();
         }
         else
         {
-            //console.log(project.name);
-            
+           
+            // les ressources sont passées dans le corps de la requête
             project.resources = req.body.resources;
           
+          // on sauvegarde le projet en question
             project.save((err, updatedProject) => {
             if (err){
                 console.log("Erreur");
                 console.log(err);
-                
+                //si erreur, retourne erreur `HTTP` 409 : CONFLICT
                 res.status(409);
                 res.end();
             }
             else
             {
+                //sinon, on retourne `HTTP` 200 : OK
                 console.log("Projet modifié dans la base");
                 res.status(200);
-                //console.log(updatedProject);
                 res.end();
             }
           });
@@ -256,37 +280,41 @@ router.put("/resources", (req, res) => {
     });
 });
 
+// Méthode `PUT` permet de mettre à jour le milestone d'un projet par _id_
 router.put("/milestone", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/updateMileStone");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
+    // on cherche le projet dans la base qui a l'_id_ passé dans le corps de la requête
     projectModel.findOne({_id:req.body.id}, (err, project) => {
         if(err)
         {
+            //si on ne trouve pas, retourne erreur `HTTP` 409 : CONFLICT
             console.log("erreur");
             res.status(409);
             res.end();
         }
         else
         {
-            //console.log(project.name);
             
+           // le milestone est passé dans le corps de la requête
             project.mileStone = req.body.milestone;
 
+            // on sauvegarde le projet en question
             project.save((err, updatedProject) => {
             if (err){
                 console.log("Erreur");
                 console.log(err);
-                
+                //si erreur, retourne erreur `HTTP` 409 : CONFLICT
                 res.status(409);
                 res.end();
             }
             else
             {
                 console.log("Projet modifié dans la base");
+                //sinon, on retourne `HTTP` 200 : OK
                 res.status(200);
-                //console.log(updatedProject);
                 res.end();
             }
           });
@@ -295,35 +323,39 @@ router.put("/milestone", (req, res) => {
     });
 });
 
+// Méthode `PUT` permet de mettre à jour les taches d'un projet par _id_
 router.put("/tasks", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/updateTasks");
     console.log("-->-->-->-->-->-->-->-->-->--");
     
+    // on cherche le projet dans la base qui a l'_id_ passé dans le corps de la requête
     projectModel.findOne({_id:req.body.id}, (err, project) => {
         if(err)
         {
+            //si on ne trouve pas, retourne erreur `HTTP` 409 : CONFLICT
             console.log("erreur");
             res.status(409);
             res.end();
         }
         else
         {
-            //console.log(project.name);
-            
+            // les taches sont passées dans le corps de la requête
             project.tasks = req.body.tasks;
 
+            // on sauvegarde le projet en question
             project.save((err, updatedProject) => {
             if (err){
                 console.log("Erreur");
                 console.log(err);
-                
+                //si erreur, retourne erreur `HTTP` 409 : CONFLICT
                 res.status(409);
                 res.end();
             }
             else
             {
                 console.log("Projet modifié dans la base");
+                //sinon, on retourne `HTTP` 200 : OK
                 res.status(200);
                 console.log(updatedProject);
                 res.end();

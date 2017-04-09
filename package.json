@@ -8,6 +8,7 @@
   "dependencies": {
     "async": "~0.2.8",
     "body-parser": "^1.17.1",
+    "docco": "^0.7.0",
     "express": "^4.15.2",
     "mongoose": "^4.9.0",
     "objectid": "^3.2.1",
