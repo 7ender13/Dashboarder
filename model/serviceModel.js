@@ -8,7 +8,7 @@ let ServiceSchema = new Schema(
         nameService:{type:String},
         projects:[
         {
-            name:{type:String, required:true, unique:true, trim:true},
+            name:{type:String, required:true, unique:true, trim:true}, 
             creatorName:{type:String, required:true},
             description:{type:String},
             daysOff:{
