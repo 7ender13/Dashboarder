@@ -16,6 +16,10 @@ let ProjectSchema = new Schema({
         Sa:{type:Boolean},
         Su:{type:Boolean},
     },
+    workingHours : { 
+        start : {type:String}, 
+        end : {type:String} 
+    },
     resources:[{
         name:{type:String},
         cost:{type:Number},

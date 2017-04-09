@@ -4,9 +4,31 @@ const express       = require('express')
 const router        = express.Router();
 const projectModel  = require('../model/projectModel');
 const userModel     = require('../model/userModel');
+const serviceModel  = require('../model/serviceModel');
 
 const mongoose      = require('mongoose');
-                    
+const socket        = require('socket.io-client');
+let client          = socket.connect('https://c9.seefox.fr', {reconnect: true});
+
+client.on('connect', () => {
+  console.log('connected')
+});
+
+client.on('info', (data) => {
+    console.log('info');
+    console.log(data);
+});
+
+client.on('projectUpdated', (data) => {
+    console.log('-------------------------------');
+    console.log('-------------------------------');
+    console.log('projectUpdated');
+    console.log(data);
+    console.log('-------------------------------');
+    console.log('-------------------------------');
+});
+
+
 router.post("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/post");
@@ -47,6 +69,7 @@ router.post("/", (req, res) => {
                 creatorName:req.body.creatorName,
                 description:req.body.description,
                 daysOff:{},
+                workingHours:{},
                 resources:[{}],
                 mileStone:[{}],
                 tasks:[{}],
@@ -67,6 +90,7 @@ router.post("/", (req, res) => {
                     res.status(200);
                     console.log('Projet Ajouté dans mongoDB !');
                     //console.log(project);
+                    sendUpdate(req.body.nameOfService);
                     res.end();
                 }
             });
@@ -116,6 +140,13 @@ router.get("/shared/:name", (req, res) => {
     });
 });
 
+router.get("/read", (req, res) => {
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    console.log("project/get (all project in read access)");
+    console.log("-->-->-->-->-->-->-->-->-->--");
+    
+});
+
 router.delete("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     console.log("project/delete");
@@ -154,25 +185,38 @@ router.put("/description", (req, res) => {
         else
         {
             //console.log(project.name);
-            
-            project.description = req.body.description;
+            //console.log(req.body);
+            if(req.body.editorName === project.creatorName)
+            {
+                project.description = req.body.description;
           
-            project.save((err, updatedProject) => {
-            if (err){
-                console.log("Erreur");
-                console.log(err);
-                
-                res.status(409);
-                res.end();
+                project.save((err, updatedProject) => {
+                if (err){
+                    console.log("Erreur");
+                    console.log(err);
+                    
+                    res.status(409);
+                    res.end();
+                }
+                else
+                {
+                    console.log("Projet modifié dans la base");
+                    res.status(200);
+                    //console.log(updatedProject);
+                    sendUpdate(req.body.nameOfService);
+                    res.end();
+                }
+              });
             }
             else
             {
-                console.log("Projet modifié dans la base");
-                res.status(200);
-                //console.log(updatedProject);
+                console.log("Erreur");
+                console.log(err);
+                
+                res.status(401);
                 res.end();
             }
-          });
+            
           
         }
     });
@@ -192,27 +236,39 @@ router.put("/daysoff", (req, res) => {
         }
         else
         {
-            //console.log(project.name);
+            console.log(project);
             
-            project.daysOff = req.body.daysOff;
-          
-            project.save((err, updatedProject) => {
-            if (err){
-                console.log("Erreur");
-                console.log(err);
-                
-                res.status(409);
-                res.end();
+            if(req.body.editorName === project.creatorName)
+            {
+                project.daysOff = req.body.workingDays.daysOff;
+                project.workingHours = req.body.workingDays.workingHours;
+              
+                project.save((err, updatedProject) => {
+                    if (err){
+                        console.log("Erreur");
+                        console.log(err);
+                        
+                        res.status(409);
+                        res.end();
+                    }
+                    else
+                    {
+                        console.log("Projet modifié dans la base");
+                        res.status(200);
+                        //console.log(updatedProject);
+                        sendUpdate(req.body.nameOfService);
+                        res.end();
+                    }
+                });
             }
             else
             {
-                console.log("Projet modifié dans la base");
-                res.status(200);
-                //console.log(updatedProject);
-                res.end();
+              console.log("Erreur");
+                console.log(err);
+                
+                res.status(401);
+                res.end();  
             }
-          });
-          
         }
     });
 });
@@ -232,26 +288,36 @@ router.put("/resources", (req, res) => {
         else
         {
             //console.log(project.name);
-            
-            project.resources = req.body.resources;
+            if(req.body.editorName === project.creatorName)
+            {
+                project.resources = req.body.resources;
           
-            project.save((err, updatedProject) => {
-            if (err){
-                console.log("Erreur");
-                console.log(err);
-                
-                res.status(409);
-                res.end();
+                project.save((err, updatedProject) => {
+                    if (err){
+                        console.log("Erreur");
+                        console.log(err);
+                        
+                        res.status(409);
+                        res.end();
+                    }
+                    else
+                    {
+                        console.log("Projet modifié dans la base");
+                        res.status(200);
+                        //console.log(updatedProject);
+                        sendUpdate(req.body.nameOfService);
+                        res.end();
+                    }
+                });
             }
             else
             {
-                console.log("Projet modifié dans la base");
-                res.status(200);
-                //console.log(updatedProject);
+                console.log("Erreur");
+                console.log(err);
+                
+                res.status(401);
                 res.end();
             }
-          });
-          
         }
     });
 });
@@ -271,26 +337,36 @@ router.put("/milestone", (req, res) => {
         else
         {
             //console.log(project.name);
-            
-            project.mileStone = req.body.milestone;
+            if(req.body.editorName === project.creatorName)
+            {
+                project.mileStone = req.body.milestone;
 
-            project.save((err, updatedProject) => {
-            if (err){
-                console.log("Erreur");
-                console.log(err);
-                
-                res.status(409);
-                res.end();
+                project.save((err, updatedProject) => {
+                    if (err){
+                        console.log("Erreur");
+                        console.log(err);
+                        
+                        res.status(409);
+                        res.end();
+                    }
+                    else
+                    {
+                        console.log("Projet modifié dans la base");
+                        res.status(200);
+                        //console.log(updatedProject);
+                        sendUpdate(req.body.nameOfService);
+                        res.end();
+                    }
+                });
             }
             else
             {
-                console.log("Projet modifié dans la base");
-                res.status(200);
-                //console.log(updatedProject);
+                console.log("Erreur");
+                console.log(err);
+                
+                res.status(401);
                 res.end();
             }
-          });
-          
         }
     });
 });
@@ -310,7 +386,6 @@ router.put("/tasks", (req, res) => {
         else
         {
             //console.log(project.name);
-            
             project.tasks = req.body.tasks;
 
             project.save((err, updatedProject) => {
@@ -326,6 +401,7 @@ router.put("/tasks", (req, res) => {
                 console.log("Projet modifié dans la base");
                 res.status(200);
                 //console.log(updatedProject);
+                sendUpdate(req.body.nameOfService);
                 res.end();
             }
           });
@@ -348,8 +424,7 @@ router.put("/grouptasks", (req, res) => {
         }
         else
         {
-            //console.log(project.name);
-            
+
             project.groupTasks = req.body.groupTasks;
 
             project.save((err, updatedProject) => {
@@ -365,6 +440,7 @@ router.put("/grouptasks", (req, res) => {
                 console.log("Projet modifié dans la base");
                 res.status(200);
                 //console.log(updatedProject);
+                sendUpdate(req.body.nameOfService);
                 res.end();
             }
           });
@@ -388,28 +464,52 @@ router.put("/users", (req, res) => {
         else
         {
             //console.log(project.name);
-            
-            project.users = req.body.users;
+            if(req.body.editorName === project.creatorName)
+            {
+                project.users = req.body.users;
 
-            project.save((err, updatedProject) => {
-            if (err){
-                console.log("Erreur");
-                console.log(err);
-                
-                res.status(409);
-                res.end();
+                project.save((err, updatedProject) => {
+                    if (err){
+                        console.log("Erreur");
+                        console.log(err);
+                        
+                        res.status(409);
+                        res.end();
+                    }
+                    else
+                    {
+                        console.log("Projet modifié dans la base");
+                        res.status(200);
+                        //console.log(updatedProject);
+                        sendUpdate(req.body.nameOfService);
+                        res.end();
+                    }
+                });
             }
             else
             {
-                console.log("Projet modifié dans la base");
-                res.status(200);
-                console.log(updatedProject);
+                console.log("Erreur");
+                console.log(err);
+                
+                res.status(401);
                 res.end();
             }
-          });
-          
         }
     });
 });
+
+function sendUpdate(nameOfService)
+{
+    projectModel.find({}, (err, result)=>{
+        
+        let service = new serviceModel({
+            nameService:nameOfService,
+            projects:result
+        });
+        
+        //console.log(service);
+        client.emit('sendUpdate', JSON.stringify(service));
+    });
+}
 
 module.exports = router;

@@ -26,7 +26,7 @@ mongoose.connect('mongodb://localhost/DashBoard', (error)=> {
 });
 
 
-router.use(express.static(path.join(__dirname, 'client/dist')));
+router.use(express.static(path.join(__dirname, 'client_old/')));
 
 const userCtrl    = require("./controller/userController");
 const chatCtrl    = require("./controller/chatController");

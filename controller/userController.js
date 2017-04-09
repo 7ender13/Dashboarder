@@ -77,7 +77,7 @@ router.post("/", (req, res) => {
     console.log("-->-->-->-->-->-->-->-->-->--");
     
     //console.log(req.body);
-    let user = new userModel({name: req.body.name, surname: req.body.surname, pseudo: req.body.pseudo, password:req.body.password, email:req.body.email });
+    let user = new userModel(req.body);
     
     user.save((err) => {
         if (err) 
@@ -91,7 +91,7 @@ router.post("/", (req, res) => {
         {
             res.status(200);
             console.log('Utilisateur ' + req.body.pseudo + ' ajouté dans mongoDB !');
-            console.log(user);
+            //console.log(user);
             res.end();
         }
     });

@@ -11,7 +11,8 @@ let UserSchema = new Schema({
     email:{type:String, unique:true, required:true},
     projects:[{
         name:{type:String}
-    }]
+    }],
+    service:{type:String}
 });
 
 module.exports = mongoose.model('User', UserSchema);
